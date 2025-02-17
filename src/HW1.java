@@ -29,15 +29,24 @@ public class HW1 {
 
         bb = LinearAlgebra.transpose(bb);
         ww = LinearAlgebra.transpose(ww);
-
-
-
         Matrix z = new Matrix(zVals);
 
-        Matrix min = ML.gradDes(x, y);
 
+
+        //Running the gradDes algorithm
+        Matrix[] temp = ML.gradDesTrack(x, y);
+        Matrix min = temp[0];
+        Matrix bPath = temp[1];
+        Matrix wPath = temp[2];
+
+        //Printing the minimum
         System.out.println(min);
+
+        //Plot for Q3
         PyGraph.contour(bb, ww, z, min, "b", "w", "Loss Function");
+
+        //Plot for Q6
+        PyGraph.contourTrack(bb, ww, z, bPath, wPath, min, "b", "w", "Loss Function");
     }
 
 }
