@@ -45,8 +45,26 @@ public class HW1 {
         //Plot for Q3
         PyGraph.contour(bb, ww, z, min, "b", "w", "Loss Function");
 
+        //Q5
+        //Setting defined initial guesses for equitable lr evaluation
+        double[] wV = {1};
+        Matrix w0 = new Matrix (wV);
+        double b0 = 1;
+        System.out.println("\n\nQ5:");
+        for (double lr = 0.0002; lr <= 0.001; lr += 0.0002) {
+            System.out.println("LR = " + lr);
+            System.out.println(ML.gradDes(x, y, w0, b0, lr));
+            System.out.println();
+        }
+
+        System.out.println("LR = " + 0.002);
+        System.out.println(ML.gradDes(x, y, w0, b0, 0.002));
+        System.out.println();
+
         //Plot for Q6
         PyGraph.contourTrack(bb, ww, z, bPath, wPath, min, "b", "w", "Loss Function");
+
+        //Q7
     }
 
 }
