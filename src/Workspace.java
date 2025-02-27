@@ -3,21 +3,22 @@ import java.util.function.Function;
 
 //Area for informal testing of my code
 public class Workspace {
-    static final int n = 20;
-    static final Function[] bFnc = BasisFunctions.trig(n);
-    static final double a = 0.01;
+    static final int n = 5;
+    static final Function[] bFnc = BasisFunctions.polynomials(n);
+    static final double a = 0.00001;
 
 
     static Random rand = new Random();
     static final int trSize = 300;
     static final int teSize = 200;
-    static final double lowerBound = 0;
+    static final double lowerBound = -3;
     static final double upperBound = 3;
     static final double aMag = 1;
 
+    //y=0.5*X^5 - 5X^3 - X^2 +2 + a
     private static double fnc(double x) {
-        return aMag * 2 * (rand.nextDouble() - 1) + 3 + 5 * Math.log(x) + Math.pow(x, 3) - 2 * Math.sin(x);
-
+        double a = aMag * 2 * (rand.nextDouble() - 1);
+        return 0.5 * Math.pow(x, 5) - 5 * Math.pow(x, 3) - Math.pow(x, 2) + 2;
     }
 
     public static void main(String[] args) {
@@ -56,6 +57,6 @@ public class Workspace {
         System.out.println("MSE of Testing Data: "  + errorTe);
 
         String title = "Best Fit for Order " + String.valueOf(n);
-        PyGraph.scatterWFnc(xValsTest, yValsTest, xLin, fnc,"x", "y", title);
+        PyChart.scatterWFnc(xValsTest, yValsTest, xLin, fnc,"x", "y", title);
     }
 }
