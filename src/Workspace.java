@@ -1,62 +1,138 @@
-import java.util.Random;
 import java.util.function.Function;
 
 //Area for informal testing of my code
 public class Workspace {
-    static final int n = 5;
-    static final Function[] bFnc = BasisFunctions.polynomials(n);
-    static final double a = 0.00001;
 
+    public static int n = 1;
+    public static Function[] bFnc = BasisFunctions.poly(n);
+    public static double a = 0.001;
 
-    static Random rand = new Random();
-    static final int trSize = 300;
-    static final int teSize = 200;
-    static final double lowerBound = -3;
-    static final double upperBound = 3;
-    static final double aMag = 1;
-
-    //y=0.5*X^5 - 5X^3 - X^2 +2 + a
-    private static double fnc(double x) {
-        double a = aMag * 2 * (rand.nextDouble() - 1);
-        return 0.5 * Math.pow(x, 5) - 5 * Math.pow(x, 3) - Math.pow(x, 2) + 2;
-    }
 
     public static void main(String[] args) {
 
-        Matrix xValsTrain = LinearAlgebra.randMatrix(trSize, 1, lowerBound, upperBound);
-        Matrix xValsTest = LinearAlgebra.randMatrix(teSize, 1, lowerBound, upperBound);
-        Matrix yValsTrain = new Matrix(trSize, 1);
-        Matrix yValsTest = new Matrix(teSize, 1);
+        double[][] X = {
+                { 1.22, 4.95 },
+                { 1.41, 8.02 },
+                { 8.63, 6.23 },
+                { 7.61, 5.61 },
+                { 2.00, 5.14 },
+                { 6.08, 1.71 },
+                { 4.32, 2.91 },
+                { 0.65, 9.49 },
+                { 3.31, 0.64 },
+                { 9.66, 8.08 },
+                { 3.58, 1.16 },
+                { 6.01, 7.08 },
+                { 3.05, 0.98 },
+                { 9.39, 8.95 },
+                { 1.82, 1.83 },
+                { 2.81, 5.43 },
+                { 3.12, 5.20 },
+                { 1.56, 1.56 },
+                { 3.04, 5.25 },
+                { 3.11, 3.25 },
+                { 3.89, 2.71 },
+                { 5.47, 1.85 },
+                { 3.75, 9.51 },
+                { 8.87, 4.72 },
+                { 7.30, 6.38 },
+                { 9.70, 7.75 },
+                { 6.12, 1.39 },
+                { 6.84, 4.40 },
+                { 1.20, 7.13 },
+                { 2.92, 3.66 },
+                { 7.07, 7.29 },
+                { 0.75, 9.87 },
+                { 0.21, 9.70 },
+                { 7.32, 5.99 },
+                { 5.98, 9.22 },
+                { 0.34, 9.09 },
+                { 8.32, 2.12 },
+                { 7.71, 4.94 },
+                { 4.56, 7.85 },
+                { 7.72, 1.99 },
+                { 0.88, 1.96 },
+                { 5.92, 0.46 },
+                { 5.23, 4.28 },
+                { 2.59, 6.63 },
+                { 0.06, 8.15 },
+                { 0.45, 3.25 },
+                { 0.58, 8.66 },
+                { 0.25, 1.08 },
+                { 7.71, 0.74 },
+                { 8.29, 3.57 }
+        };
 
-        //y=0.5*X^5 - 5X^3 - X^2 +2 + a
-        for (int i = 1; i <= xValsTrain.getRows(); i++) {
-            yValsTrain.setValue(i, 1, fnc(xValsTrain.getValue(i, 1)));
-        }
-
-        for (int i = 1; i <= xValsTest.getRows(); i++) {
-            yValsTest.setValue(i, 1, fnc(xValsTest.getValue(i, 1)));
-        }
-
-        Matrix w = LinearAlgebra.zeroMatrix(n * xValsTrain.getCols() + 1,1);
-
-        Matrix min = LinReg.gradDes(xValsTrain, yValsTrain, w, n, a, bFnc);
-
-        Matrix xLin = LinearAlgebra.linSpace(lowerBound, upperBound, 0.1);
-
-        Matrix fnc = LinReg.buildFunction(xLin, min, bFnc);
-
-        double errorTr = Error.meanSquared(xValsTrain, yValsTrain, min, bFnc);
-
-        double errorTe = Error.meanSquared(xValsTest, yValsTest, min, bFnc);
+        double[] y = { 0, 0, 1, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0,
+                0, 0, 1, 1, 1, 1, 0, 1, 0, 0, 1, 1, 0, 1, 1, 0, 1, 1, 1, 0,
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 1 };
 
 
-        System.out.println("Least Squares Fit for Order " + n + ":");
-        System.out.println(min);
-        System.out.println("------");
-        System.out.println("MSE of Training Data: "  + errorTr);
-        System.out.println("MSE of Testing Data: "  + errorTe);
+        double[][] X_new = {
+                { 5.11, 5.02 },
+                { 7.02, 7.96 },
+                { 6.97, 7.02 },
+                { 4.39, 0.78 },
+                { 8.90, 3.38 },
+                { 8.36, 6.96 },
+                { 2.87, 5.91 },
+                { 1.56, 2.50 },
+                { 0.25, 9.63 },
+                { 5.78, 0.36 },
+                { 3.76, 0.94 },
+                { 6.23, 0.85 },
+                { 8.09, 8.10 },
+                { 7.70, 2.16 },
+                { 7.26, 9.76 },
+                { 8.77, 7.41 },
+                { 8.23, 3.60 },
+                { 5.41, 6.37 },
+                { 0.31, 0.37 },
+                { 4.09, 1.73 },
+                { 0.52, 5.31 },
+                { 6.60, 2.80 },
+                { 4.66, 5.43 },
+                { 3.59, 2.94 },
+                { 7.95, 2.71 },
+                { 5.16, 3.23 },
+                { 8.67, 9.13 },
+                { 7.98, 6.50 },
+                { 5.49, 7.15 },
+                { 1.27, 5.22 }
+        };
 
-        String title = "Best Fit for Order " + String.valueOf(n);
-        PyChart.scatterWFnc(xValsTest, yValsTest, xLin, fnc,"x", "y", title);
+        double[] y_new = { 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 0,
+                0, 0, 1, 0, 1, 0, 1, 1, 1, 0 };
+
+        double[] w_Vals = {-10, 1, 1}; //bias + xC + yC
+
+        Matrix xTrain = new Matrix(X);
+        Matrix yTrain = new Matrix(y);
+
+        Matrix xTest = new Matrix(X_new);
+        Matrix yTest = new Matrix(y_new);
+
+        Matrix w0 = LinearAlgebra.zeroMatrix(3, 1);
+
+        Matrix w = Regression.logisticReg(xTrain, yTrain, w0, a, bFnc);
+
+        System.out.println("Weights:");
+        System.out.println(w); //Should be -10, 1, 1
+
+//        Matrix CM = Error.confusionMatrix(xTest, yTest, w, bFnc);
+        double[][] c = {{2, 0}, {1, 2}};
+        Matrix CM = new Matrix(c);
+
+        System.out.println("\nConfusion Matrix:");
+
+        System.out.println(CM);
+        System.out.println("Accuracy: " + Error.accuracy(CM));
+        System.out.println("Precision: " + Error.precision(CM));
+        System.out.println("Recall: " + Error.recall(CM));
+
+
+
+
+
     }
 }
