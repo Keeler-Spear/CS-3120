@@ -7,7 +7,6 @@ public class Workspace {
     public static Function[] bFnc = BasisFunctions.poly(n);
     public static double a = 0.001;
 
-
     public static void main(String[] args) {
 
         double[][] X = {
@@ -112,24 +111,16 @@ public class Workspace {
         Matrix xTest = new Matrix(X_new);
         Matrix yTest = new Matrix(y_new);
 
-        Matrix w0 = LinearAlgebra.zeroMatrix(3, 1);
+        Matrix w0 = LinearAlgebra.constantMatrix(3, 1, 2);
 
         Matrix w = Regression.logisticReg(xTrain, yTrain, w0, a, bFnc);
 
         System.out.println("Weights:");
         System.out.println(w); //Should be -10, 1, 1
 
-//        Matrix CM = Error.confusionMatrix(xTest, yTest, w, bFnc);
-        double[][] c = {{2, 0}, {1, 2}};
-        Matrix CM = new Matrix(c);
+        Matrix CM = Error.confusionMatrix(xTest, yTest, w, bFnc);
 
-        System.out.println("\nConfusion Matrix:");
-
-        System.out.println(CM);
-        System.out.println("Accuracy: " + Error.accuracy(CM));
-        System.out.println("Precision: " + Error.precision(CM));
-        System.out.println("Recall: " + Error.recall(CM));
-
+        Error.printClassificationReport(CM);
 
 
 
