@@ -11,7 +11,7 @@ public class Cancer {
     public static void main(String[] args) {
 
 
-        String file = "C:\\Users\\grand\\PersonalProjects\\CS-3120\\data\\data.csv"; //From https://www.kaggle.com/datasets/uciml/breast-cancer-wisconsin-data?resource=download
+        String file = ""; //From https://www.kaggle.com/datasets/uciml/breast-cancer-wisconsin-data?resource=download
         double[][] dataVals = ReadFile.csvToArray(file, "M", "B", 1);
 
         double[][] trData = new double[376][dataVals[0].length];
