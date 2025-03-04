@@ -4,7 +4,7 @@ import java.util.function.Function;
 
 public class Cancer {
 
-    public static int n = 1;
+    public static int n = 2; //93.8%
     public static Function[] bFnc = BasisFunctions.poly(n);
     public static double a = 0.001;
 
@@ -28,11 +28,11 @@ public class Cancer {
         Matrix yTrain = LinearAlgebra.vectorFromColumn(xTrain, 1);
         xTrain.removeCol(1); //Removing labels
 
-        Matrix xTest = new Matrix(trData);
+        Matrix xTest = new Matrix(teData);
         Matrix yTest = LinearAlgebra.vectorFromColumn(xTest, 1);
         xTest.removeCol(1); //Removing labels
 
-        Matrix w0 = LinearAlgebra.zeroMatrix(xTrain.getCols() + 1, 1);
+        Matrix w0 = LinearAlgebra.zeroMatrix(n * xTrain.getCols() + 1, 1);
 
         Matrix w = Regression.logisticReg(xTrain, yTrain, w0, a, bFnc);
 
