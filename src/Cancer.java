@@ -21,10 +21,8 @@ public class Cancer {
 
         Matrix w0 = LinearAlgebra.zeroMatrix(n * xTrain.getCols() + 1, 1);
 
-        Matrix w = Regression.logisticReg(xTrain, yTrain, w0, a, bFnc);
+        Matrix w = Regression.logisticReg(xTrain, yTrain, w0, a, bFnc, false);
 
-        Matrix CM = Metrics.confusionMatrix(xTest, yTest, w, bFnc);
-
-        Metrics.printClassificationReport(CM);
+        Metrics.printClassificationReport(xTest, yTest, w, bFnc);
     }
 }
