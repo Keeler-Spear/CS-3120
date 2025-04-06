@@ -25,7 +25,6 @@ public class HW4 {
         };
         Matrix y = new Matrix(yVals);
 
-
     }
 
 }
